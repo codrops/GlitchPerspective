@@ -1,0 +1,806 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+:root {
+	font-size: 16px;
+	--color-text: #000;
+	--color-bg: #3124c7;
+	--color-link: #fff;
+	--color-link-hover: #000;
+	--color-label: #fff;
+	--content-hover: #f3727e;
+	/* Glitch variables */
+	--gap-horizontal: 20px;
+    --gap-vertical: 5px;
+	--time-anim: 1s;
+	--blend-mode-1: none;
+	--blend-mode-2: color-dodge;
+	--blend-mode-3: luminosity;
+	--blend-mode-4: none;
+	--blend-mode-5: none;
+	--blend-color-1: #f3727e;
+	--blend-color-2: #f3727e;
+	--blend-color-3: #3124c7;
+	--blend-color-4: #3124c7;
+	--blend-color-5: #f3727e;
+	/* Rotation variables */
+	--rotate-time: 0.5s;
+	--rotate-easing: cubic-bezier(0.2,1,0.3,1);
+	/* Cover variables */
+	--fade-out-time: 0.25s;
+	--fade-in-time: 0.25s;
+	--fade-out-easing: ease-out;
+	--fade-in-easing: ease-out;
+}
+
+.demo-2 {
+	--color-bg: #6d5c5b;
+	--content-hover: #000;
+}
+
+body {
+	margin: 0;
+	color: var(--color-text);
+	background-color: var(--color-bg);
+	font-family: widescreen-ex, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overflow-x: hidden;
+}
+
+/* Page Loader */
+.js .loading::before,
+.js .loading::after {
+	content: '';
+	position: fixed;
+	z-index: 1000;
+}
+
+.js .loading::before {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--color-bg);
+}
+
+.js .loading::after {
+	top: 50%;
+	left: 50%;
+	width: 60px;
+	height: 60px;
+	margin: -30px 0 0 -30px;
+	border-radius: 50%;
+	opacity: 0.4;
+	background: var(--color-link);
+	animation: loaderAnim 0.7s linear infinite alternate forwards;
+
+}
+
+@keyframes loaderAnim {
+	to {
+		opacity: 1;
+		transform: scale3d(0.5,0.5,1);
+	}
+}
+
+a {
+	text-decoration: none;
+	color: var(--color-link);
+	outline: none;
+	cursor: pointer;
+}
+
+a:hover {
+	color: var(--color-link-hover);
+	outline: none;
+}
+
+/* Better focus styles from https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible */
+a:focus {
+	/* Provide a fallback style for browsers
+	 that don't support :focus-visible */
+	outline: none;
+	background: lightgrey;
+}
+
+a:focus:not(:focus-visible) {
+	/* Remove the focus indicator on mouse-focus for browsers
+	 that do support :focus-visible */
+	background: transparent;
+}
+
+a:focus-visible {
+	/* Draw a very noticeable focus style for
+	 keyboard-focus on browsers that do support
+	 :focus-visible */
+	outline: 2px solid red;
+	background: transparent;
+}
+
+.unbutton {
+	background: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	cursor: pointer;
+}
+
+.unbutton:focus {
+	outline: none;
+}
+
+.frame {
+	padding: 1rem 2rem;
+	text-transform: uppercase;
+}
+
+.frame__title-main {
+	font-size: 1rem;
+	margin: 0;
+	font-weight: normal;
+}
+
+.frame__title-back {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 0.15rem;
+}
+
+.frame__title-back span {
+	display: none;
+}
+
+.frame__title-back svg {
+	fill: var(--color-text);
+}
+
+.frame__title-prev {
+	margin: 0 2rem 0 0;
+}
+
+.frame__demo {
+	margin: 0 1rem 0 0;
+}
+
+.frame__demo--current {
+	color: var(--color-link-hover);
+}
+
+.intro { 
+	padding: 10vh 2rem 10vh;
+	margin-bottom: 2rem;
+}
+
+.intro__title {
+	grid-area: title;
+	font-family: widescreen-ex, sans-serif;
+	font-weight: 800;
+	font-size: clamp(2rem,12vw,10rem);
+	line-height: 1;
+	margin: 0;
+}
+
+.intro__title span {
+	text-transform: uppercase;
+	-webkit-text-stroke: 1px #000;
+	text-stroke: 1px #000;
+	-webkit-text-fill-color: transparent;
+	text-fill-color: transparent;
+	color: transparent;
+	text-shadow: -10px 10px 0 #000;
+}
+
+.intro__title em {
+	font-family: park-lane, serif;
+	font-weight: 300;
+	font-style: normal;
+	display: block;
+	margin: -2.5vw 0 0 0;
+	text-transform: uppercase;
+    font-size: clamp(2rem,10vw,10rem);
+    -webkit-text-stroke: 1px #000;
+	text-stroke: 1px #000;
+	-webkit-text-fill-color: var(--color-bg);
+	text-fill-color: var(--color-bg);
+	color: var(--color-bg);
+}
+
+.intro__description {
+	margin: 1.75vw 0 0 0;
+	grid-area: desc;
+	font-weight: 500;
+	font-size: clamp(1rem, 2vw, 1.25rem);
+	max-width: 350px;
+}
+
+.intro__button {
+	grid-area: button;
+	border: 1px solid var(--color-text);
+	background: var(--color-bg);
+	box-shadow: 1px 2px 0 #000;
+	font-size: 1.25rem;
+	padding: 1rem 2rem;
+	border-radius: 1.25rem;
+	justify-self: end;
+	font-weight: bold;
+	text-transform: uppercase;
+	margin-top: 1rem;
+}
+
+.intro__button:hover,
+.intro__button:focus {
+	transform: translate3d(1px,2px,0);
+	box-shadow: 0px 0px 0 #000;
+}
+
+.content {
+	display: grid;
+	grid-gap: 1.5rem;
+	margin: 0 auto;
+	padding-bottom: 30vh;
+	grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
+}
+
+.item {
+	aspect-ratio: 0.8;
+	cursor: pointer;
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 100%;
+	perspective: 1000px;
+	overflow: hidden;
+	position: relative;
+	margin: 0;
+}
+
+.demo-2 .item {
+	overflow: visible;
+}
+
+.demo-2 .item--oh {
+	overflow: hidden;
+}
+
+.item__img {
+	grid-area: 1 / 1 / -1 / -1;
+	position: relative;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.item:hover .item__img {
+	opacity: 1;
+	transition: transform var(--rotate-time) var(--rotate-easing);
+	transform: translateZ(-200px) rotateX(60deg) rotateY(0) rotateZ(-35deg);
+}
+
+.glitch {
+	display: grid;
+	place-items: center;
+}
+
+.glitch__img {
+	grid-area: 1 / 1 / -1 / -1;
+	background-image: var(--img);
+	background-position: 50% 50%;
+	background-size: cover;
+	image-rendering: pixelated;
+	width: 100%;
+	height: 100%;
+	background-color: var(--blend-color-1);
+	transform: translate3d(0,0,0);
+	background-blend-mode: var(--blend-mode-1);
+}
+
+.glitch__img:nth-child(2) {
+	background-color: var(--blend-color-2);
+	background-blend-mode: var(--blend-mode-2);
+}
+
+.glitch__img:nth-child(3) {
+	background-color: var(--blend-color-3);
+	background-blend-mode: var(--blend-mode-3);
+}
+
+.glitch__img:nth-child(4) {
+	background-color: var(--blend-color-4);
+	background-blend-mode: var(--blend-mode-4);
+}
+
+.glitch__img:nth-child(5) {
+	background-color: var(--blend-color-5);
+	background-blend-mode: var(--blend-mode-5);
+}
+
+/* Hide all images except the first one */
+.glitch__img:nth-child(n+2) {
+	opacity: 0;
+}
+
+/* Hovers */
+
+/* On hover we show the 2nd, 3rd, 4th and 5th image*/
+.item:hover .glitch__img:nth-child(n+2) {
+	opacity: 1;
+}
+
+/* Hover animations for horizontal case */
+.item:hover .glitch__img:nth-child(2) {
+	transform: translate3d(var(--gap-horizontal),0,0);
+	animation: glitch-anim-1-horizontal var(--time-anim) infinite linear alternate;
+}
+
+.item:hover .glitch__img:nth-child(3) {
+	transform: translate3d(calc(-1 * var(--gap-horizontal)),0,0);
+	animation: glitch-anim-2-horizontal var(--time-anim) infinite linear alternate;
+}
+
+.item:hover .glitch__img:nth-child(4) {
+	transform: translate3d(0, calc(-1 * var(--gap-vertical)), 0) scale3d(-1,-1,1);
+	animation: glitch-anim-3-horizontal var(--time-anim) infinite linear alternate;
+}
+
+/* Hover flash animation on last image */
+.item:hover .glitch__img:nth-child(5) {
+	animation: glitch-anim-flash 0.5s steps(1,end) infinite;
+}
+
+/* Animations */
+
+/* Horizontal */
+@keyframes glitch-anim-1-horizontal {
+	0% { 
+		-webkit-clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+		clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
+	}
+	10% {
+		-webkit-clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
+		clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%);
+	}
+	20% {
+		-webkit-clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+		clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%);
+	}
+	30% {
+		-webkit-clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
+		clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%);
+	}
+	40% {
+		-webkit-clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
+		clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%);
+	}
+	50% {
+		-webkit-clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
+		clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%);
+	}
+	60% {
+		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
+		clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%);
+	}
+	70% {
+		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
+		clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%);
+	}
+	80% {
+		-webkit-clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
+		clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%);
+	}
+	90% {
+		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+		clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+	}
+	100% {
+		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
+		clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
+	}
+}
+
+@keyframes glitch-anim-2-horizontal {
+	0% { 
+		-webkit-clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
+		clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
+	}
+	15% {
+		-webkit-clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%);
+		clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%);
+	}
+	22% {
+		-webkit-clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%);
+		clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%);
+	}
+	31% {
+		-webkit-clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
+		clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
+	}
+	45% {
+		-webkit-clip-path: polygon(0 40%, 100% 40%, 100% 40%, 0 40%);
+		clip-path: polygon(0 40%, 100% 40%, 100% 40%, 0 40%);
+	}
+	51% {
+		-webkit-clip-path: polygon(0 52%, 100% 52%, 100% 59%, 0 59%);
+		clip-path: polygon(0 52%, 100% 52%, 100% 59%, 0 59%);
+	}
+	63% {
+		-webkit-clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
+		clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
+	}
+	76% {
+		-webkit-clip-path: polygon(0 75%, 100% 75%, 100% 75%, 0 75%);
+		clip-path: polygon(0 75%, 100% 75%, 100% 75%, 0 75%);
+	}
+	81% {
+		-webkit-clip-path: polygon(0 65%, 100% 65%, 100% 40%, 0 40%);
+		clip-path: polygon(0 65%, 100% 65%, 100% 40%, 0 40%);
+	}
+	94% {
+		-webkit-clip-path: polygon(0 45%, 100% 45%, 100% 50%, 0 50%);
+		clip-path: polygon(0 45%, 100% 45%, 100% 50%, 0 50%);
+	}
+	100% {
+		-webkit-clip-path: polygon(0 14%, 100% 14%, 100% 33%, 0 33%);
+		clip-path: polygon(0 14%, 100% 14%, 100% 33%, 0 33%);
+	}
+}
+
+@keyframes glitch-anim-3-horizontal {
+	0% { 
+		-webkit-clip-path: polygon(0 1%, 100% 1%, 100% 3%, 0 3%);
+		clip-path: polygon(0 1%, 100% 1%, 100% 3%, 0 3%);
+	}
+	5% {
+		-webkit-clip-path: polygon(0 10%, 100% 10%, 100% 9%, 0 9%);
+		clip-path: polygon(0 10%, 100% 10%, 100% 9%, 0 9%);
+	}
+	10% {
+		-webkit-clip-path: polygon(0 5%, 100% 5%, 100% 6%, 0 6%);
+		clip-path: polygon(0 5%, 100% 5%, 100% 6%, 0 6%);
+	}
+	25% {
+		-webkit-clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
+		clip-path: polygon(0 20%, 100% 20%, 100% 20%, 0 20%);
+	}
+	27% {
+		-webkit-clip-path: polygon(0 10%, 100% 10%, 100% 10%, 0 10%);
+		clip-path: polygon(0 10%, 100% 10%, 100% 10%, 0 10%);
+	}
+	30% {
+		-webkit-clip-path: polygon(0 30%, 100% 30%, 100% 25%, 0 25%);
+		clip-path: polygon(0 30%, 100% 30%, 100% 25%, 0 25%);
+	}
+	33% {
+		-webkit-clip-path: polygon(0 15%, 100% 15%, 100% 16%, 0 16%);
+		clip-path: polygon(0 15%, 100% 15%, 100% 16%, 0 16%);
+	}
+	37% {
+		-webkit-clip-path: polygon(0 40%, 100% 40%, 100% 39%, 0 39%);
+		clip-path: polygon(0 40%, 100% 40%, 100% 39%, 0 39%);
+	}
+	40% {
+		-webkit-clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
+		clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
+	}
+	45% {
+		-webkit-clip-path: polygon(0 60%, 100% 60%, 100% 55%, 0 55%);
+		clip-path: polygon(0 60%, 100% 60%, 100% 55%, 0 55%);
+	}
+	50% {
+		-webkit-clip-path: polygon(0 30%, 100% 30%, 100% 31%, 0 31%);
+		clip-path: polygon(0 30%, 100% 30%, 100% 31%, 0 31%);
+	}
+	53% {
+		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 69%, 0 69%);
+		clip-path: polygon(0 70%, 100% 70%, 100% 69%, 0 69%);
+	}
+	57% {
+		-webkit-clip-path: polygon(0 40%, 100% 40%, 100% 41%, 0 41%);
+		clip-path: polygon(0 40%, 100% 40%, 100% 41%, 0 41%);
+	}
+	60% {
+		-webkit-clip-path: polygon(0 80%, 100% 80%, 100% 75%, 0 75%);
+		clip-path: polygon(0 80%, 100% 80%, 100% 75%, 0 75%);
+	}
+	65% {
+		-webkit-clip-path: polygon(0 50%, 100% 50%, 100% 51%, 0 51%);
+		clip-path: polygon(0 50%, 100% 50%, 100% 51%, 0 51%);
+	}
+	70% {
+		-webkit-clip-path: polygon(0 90%, 100% 90%, 100% 90%, 0 90%);
+		clip-path: polygon(0 90%, 100% 90%, 100% 90%, 0 90%);
+	}
+	73% {
+		-webkit-clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
+		clip-path: polygon(0 60%, 100% 60%, 100% 60%, 0 60%);
+	}
+	80% {
+		-webkit-clip-path: polygon(0 100%, 100% 100%, 100% 99%, 0 99%);
+		clip-path: polygon(0 100%, 100% 100%, 100% 99%, 0 99%);
+	}
+	100% {
+		-webkit-clip-path: polygon(0 70%, 100% 70%, 100% 71%, 0 71%);
+		clip-path: polygon(0 70%, 100% 70%, 100% 71%, 0 71%);
+	}
+}
+
+/* Vertical */
+@keyframes glitch-anim-1-vertical {
+	0% { 
+		-webkit-clip-path: polygon(2% 0, 5% 0, 5% 100%, 2% 100%);
+		clip-path: polygon(2% 0, 5% 0, 5% 100%, 2% 100%);
+	}
+	10% {
+		-webkit-clip-path: polygon(15% 0, 15% 0, 15% 100%, 15% 100%);
+		clip-path: polygon(15% 0, 15% 0, 15% 100%, 15% 100%);
+	}
+	20% {
+		-webkit-clip-path: polygon(10% 0, 20% 0, 20% 100%, 10% 100%);
+		clip-path: polygon(10% 0, 20% 0, 20% 100%, 10% 100%);
+	}
+	30% {
+		-webkit-clip-path: polygon(1% 0, 2% 0, 2% 100%, 1% 100%);
+		clip-path: polygon(1% 0, 2% 0, 2% 100%, 1% 100%);
+	}
+	40% {
+		-webkit-clip-path: polygon(33% 0, 33% 0, 33% 100%, 33% 100%);
+		clip-path: polygon(33% 0, 33% 0, 33% 100%, 33% 100%);
+	}
+	50% {
+		-webkit-clip-path: polygon(44% 0, 44% 0, 44% 100%, 44% 100%);
+		clip-path: polygon(44% 0, 44% 0, 44% 100%, 44% 100%);
+	}
+	60% {
+		-webkit-clip-path: polygon(50% 0, 20% 0, 20% 100%, 50% 100%);
+		clip-path: polygon(50% 0, 20% 0, 20% 100%, 50% 100%);
+	}
+	70% {
+		-webkit-clip-path: polygon(70% 0, 70% 0, 70% 100% 70%, 70% 100%);
+		clip-path: polygon(70% 0, 70% 0, 70% 100% 70%, 70% 100%);
+	}
+	80% {
+		-webkit-clip-path: polygon(80% 0, 80% 0, 80% 100% 80%, 80% 100%);
+		clip-path: polygon(80% 0, 80% 0, 80% 100% 80%, 80% 100%);
+	}
+	90% {
+		-webkit-clip-path: polygon(50% 0, 55% 0, 55% 100%, 50% 100%);
+		clip-path: polygon(50% 0, 55% 0, 55% 100%, 50% 100%);
+	}
+	100% {
+		-webkit-clip-path: polygon(70% 0, 80% 0, 80% 100%, 70% 100%);
+		clip-path: polygon(70% 0, 80% 0, 80% 100%, 70% 100%);
+	}
+}
+
+@keyframes glitch-anim-2-vertical {
+	0% { 
+		-webkit-clip-path: polygon(25% 0, 30% 0, 30% 100%, 25% 100%);
+		clip-path: polygon(25% 0, 30% 0, 30% 100%, 25% 100%);
+	}
+	15% {
+		-webkit-clip-path: polygon(3% 0, 3% 0, 3% 100%, 3% 100%);
+		clip-path: polygon(3% 0, 3% 0, 3% 100%, 3% 100%);
+	}
+	22% {
+		-webkit-clip-path: polygon(5% 0, 20% 0, 20% 100%, 5% 100%);
+		clip-path: polygon(5% 0, 20% 0, 20% 100%, 5% 100%);
+	}
+	31% {
+		-webkit-clip-path: polygon(20% 0, 20% 0, 20% 100%, 20% 100%);
+		clip-path: polygon(20% 0, 20% 0, 20% 100%, 20% 100%);
+	}
+	45% {
+		-webkit-clip-path: polygon(40% 0, 40% 0, 40% 100%, 40% 100%);
+		clip-path: polygon(40% 0, 40% 0, 40% 100%, 40% 100%);
+	}
+	51% {
+		-webkit-clip-path: polygon(52% 0, 59% 0, 59% 100%, 52% 100%);
+		clip-path: polygon(52% 0, 59% 0, 59% 100%, 52% 100%);
+	}
+	63% {
+		-webkit-clip-path: polygon(60% 0, 60% 0, 60% 100%, 60% 100%);
+		clip-path: polygon(60% 0, 60% 0, 60% 100%, 60% 100%);
+	}
+	76% {
+		-webkit-clip-path: polygon(75% 0, 75% 0, 75% 100%, 75% 100%);
+		clip-path: polygon(75% 0, 75% 0, 75% 100%, 75% 100%);
+	}
+	81% {
+		-webkit-clip-path: polygon(65% 0, 40% 0, 40% 100%, 65% 100%);
+		clip-path: polygon(65% 0, 40% 0, 40% 100%, 65% 100%);
+	}
+	94% {
+		-webkit-clip-path: polygon(45% 0, 50% 0, 50% 100%, 45% 100%);
+		clip-path: polygon(45% 0, 50% 0, 50% 100%, 45% 100%);
+	}
+	100% {
+		-webkit-clip-path: polygon(14% 0, 33% 0, 33% 100%, 14% 100%);
+		clip-path: polygon(14% 0, 33% 0, 33% 100%, 14% 100%);
+	}
+}
+
+@keyframes glitch-anim-3-vertical {
+	0% { 
+		-webkit-clip-path: polygon(1% 0, 3% 0, 3% 100%, 1% 100%);
+		clip-path: polygon(1% 0, 3% 0, 3% 100%, 1% 100%);
+	}
+	5% {
+		-webkit-clip-path: polygon(10% 0, 9% 0, 9% 100%, 10% 100%);
+		clip-path: polygon(10% 0, 9% 0, 9% 100%, 10% 100%);
+	}
+	10% {
+		-webkit-clip-path: polygon(5% 0, 6% 0 6% 100%, 5% 100%);
+		clip-path: polygon(5% 0, 6% 0 6% 100%, 5% 100%);
+	}
+	25% {
+		-webkit-clip-path: polygon(20% 0, 20% 0, 20% 100%, 20% 100%);
+		clip-path: polygon(20% 0, 20% 0, 20% 100%, 20% 100%);
+	}
+	27% {
+		-webkit-clip-path: polygon(10% 0, 10% 0, 10% 100%, 10% 100%);
+		clip-path: polygon(10% 0, 10% 0, 10% 100%, 10% 100%);
+	}
+	30% {
+		-webkit-clip-path: polygon(30% 0, 25% 0, 25% 100%, 30% 100%);
+		clip-path: polygon(30% 0, 25% 0, 25% 100%, 30% 100%);
+	}
+	33% {
+		-webkit-clip-path: polygon(15% 0, 16% 0, 16% 100%, 15% 100%);;
+		clip-path: polygon(15% 0, 16% 0, 16% 100%, 15% 100%);
+	}
+	37% {
+		-webkit-clip-path: polygon(40% 0, 39% 0, 39% 100%, 40% 100%);;
+		clip-path: polygon(40% 0, 39% 0, 39% 100%, 40% 100%);
+	}
+	40% {
+		-webkit-clip-path: polygon(20% 0, 21% 0, 21% 100%, 20% 100%);
+		clip-path: polygon(20% 0, 21% 0, 21% 100%, 20% 100%); 
+	}
+	45% {
+		-webkit-clip-path: polygon(60% 0, 55% 0, 55% 100%, 60% 100%);
+		clip-path: polygon(60% 0, 55% 0, 55% 100%, 60% 100%);
+	}
+	50% {
+		-webkit-clip-path: polygon(30% 0, 31% 0, 31% 100%, 30% 100%);
+		clip-path: polygon(30% 0, 31% 0, 31% 100%, 30% 100%);
+	}
+	53% {
+		-webkit-clip-path: polygon(70% 0, 69% 0, 69% 100%, 70% 100%);
+		clip-path: polygon(70% 0, 69% 0, 69% 100%, 70% 100%);
+	}
+	57% {
+		-webkit-clip-path: polygon(40% 0, 41% 0, 41% 100%, 40% 100%);
+		clip-path: polygon(40% 0, 41% 0, 41% 100%, 40% 100%);
+	}
+	60% {
+		-webkit-clip-path: polygon(80% 0, 75% 0, 75% 100%, 80% 100%);
+		clip-path: polygon(80% 0, 75% 0, 75% 100%, 80% 100%);
+	}
+	65% {
+		-webkit-clip-path: polygon(50% 0, 51% 0, 51% 100%, 50% 100%);
+		clip-path: polygon(50% 0, 51% 0, 51% 100%, 50% 100%);
+	}
+	70% {
+		-webkit-clip-path: polygon(90% 0, 90% 0, 90% 100%, 90% 100%);
+		clip-path: polygon(90% 0, 90% 0, 90% 100%, 90% 100%);
+	}
+	73% {
+		-webkit-clip-path: polygon(60% 0, 60% 0, 60% 100%, 60% 100%);
+		clip-path: polygon(60% 0, 60% 0, 60% 100%, 60% 100%);
+	}
+	80% {
+		-webkit-clip-path: polygon(100% 0, 99% 0, 99% 100%, 100% 100%);
+		clip-path: polygon(100% 0, 99% 0, 99% 100%, 100% 100%);
+	}
+	100% {
+		-webkit-clip-path: polygon(70% 0, 71% 0, 71% 100%, 70% 100%);
+		clip-path: polygon(70% 0, 71% 0, 71% 100%, 70% 100%);
+	}
+}
+
+/* Flash */
+@keyframes glitch-anim-flash {
+	0% { 
+		opacity: 0.2; 
+		transform: translate3d(var(--gap-horizontal), var(--gap-vertical), 0);
+	}
+	33%, 100% { 
+		opacity: 0;
+		transform: translate3d(0,0,0);
+	}
+}
+
+.item__cover {
+	grid-area: 1 / 1 / -1 / -1;
+	background-size: cover;
+	background-position: 50% 50%;
+	position: relative;
+	transition: opacity var(--fade-in-time) var(--fade-in-easing);
+	pointer-events: none;
+}
+
+.item__cover::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(0deg,rgb(54 58 199 / 38%), rgba(0,0,0,0.2));
+}
+
+.item:hover .item__cover {
+	opacity: 0;
+	transition: opacity var(--fade-out-time) var(--fade-out-easing);
+}
+
+.item__content {
+	display: flex;
+	flex-direction: column;
+	pointer-events: none;
+	padding: 1.5rem;
+	position: relative;
+	grid-area: 1 / 1 / -1 / -1;
+	color: var(--color-label);
+}
+
+.item__content-title {
+	font-family: park-lane, serif;
+	font-weight: 300;
+	font-style: normal;
+	font-size: clamp(3rem,4vw,5rem);
+	line-height: 1;
+	margin: 0;
+}
+
+.item:hover .item__content-title,
+.item:hover .item__content-label {
+	color: var(--content-hover);
+}
+
+.item__content-label {
+	margin: auto 0 0;
+}
+
+blockquote {
+	font-weight: 500;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+@media screen and (min-width: 53em) {
+	.frame {
+		text-align: center;
+		display: grid;
+		grid-template-columns: auto auto;
+		grid-template-rows: auto auto;
+		grid-template-areas: 'title sponsor' 'demos demos';
+		grid-row-gap: 1rem;
+		align-content: space-between;
+	}
+	.frame__title {
+		grid-area: title;
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-columns: auto auto 1fr;
+		align-items: start;
+		justify-items: flex-start;
+	}
+	.frame__demos {
+		grid-area: demos;
+		justify-self: end;
+	}
+	.frame__demo {
+		margin: 0 0 0 1rem;
+	}
+	.intro {
+		display: grid;
+		grid-column-gap: 1rem;
+		grid-template-areas: 'title desc' 
+							'title button';
+		justify-content: space-between;
+		align-items: start;
+		text-align: right;
+	}
+}
